@@ -52,15 +52,15 @@ object HorseStatsRenderer : HudElement {
         val jump = entity.getAttributeBaseValue(Attributes.JUMP_STRENGTH).toJump().round(3)
         val health = entity.getAttributeBaseValue(Attributes.MAX_HEALTH).round(3)
 
-        val speedPercentage = entity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED).toPercentage(HorseStatRanges.MAX_MOVEMENT_SPEED)
-        val jumpPercentage = entity.getAttributeBaseValue(Attributes.JUMP_STRENGTH).toPercentage(HorseStatRanges.MAX_JUMP_STRENGTH)
-        val healthPercentage = health.toPercentage(HorseStatRanges.MAX_HEALTH)
+        val speedPercentage = entity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED).toPercentage(HorsePowerClient.maxMovementSpeed)
+        val jumpPercentage = entity.getAttributeBaseValue(Attributes.JUMP_STRENGTH).toPercentage(HorsePowerClient.maxJumpStrength)
+        val healthPercentage = health.toPercentage(HorsePowerClient.maxHealth)
 
         extractor.drawBackgroundBox(x, y)
 
-        extractor.drawAttribute("→ ", speed, speedPercentage, HorseStatRanges.MIN_MOVEMENT_SPEED.toBPS(), HorseStatRanges.MAX_MOVEMENT_SPEED.toBPS(), x, y, 0, mouseX, mouseY)
-        extractor.drawAttribute("↑ ", jump, jumpPercentage, HorseStatRanges.MIN_JUMP_STRENGTH.toJump(), HorseStatRanges.MAX_JUMP_STRENGTH.toJump(), x, y, 10, mouseX, mouseY)
-        extractor.drawAttribute("♥ ", health, healthPercentage, HorseStatRanges.MIN_HEALTH, HorseStatRanges.MAX_HEALTH, x, y, 20, mouseX, mouseY)
+        extractor.drawAttribute("→ ", speed, speedPercentage, HorsePowerClient.minMovementSpeed.toBPS(), HorsePowerClient.maxMovementSpeed.toBPS(), x, y, 0, mouseX, mouseY)
+        extractor.drawAttribute("↑ ", jump, jumpPercentage, HorsePowerClient.minJumpStrength.toJump(), HorsePowerClient.maxJumpStrength.toJump(), x, y, 10, mouseX, mouseY)
+        extractor.drawAttribute("♥ ", health, healthPercentage, HorsePowerClient.minHealth, HorsePowerClient.maxHealth, x, y, 20, mouseX, mouseY)
 
         if (HorsePowerConfig.SHOW_AVERAGE.value) {
             extractor.drawAverage(speedPercentage, jumpPercentage, healthPercentage, x, y + 30)

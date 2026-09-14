@@ -36,6 +36,10 @@ dependencies {
     implementation(libs.modmenu)
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/horsepower.classtweaker")
+}
+
 tasks.processResources {
     inputs.property("version", project.version)
     inputs.property("minecraft_version", libs.versions.minecraft.get())

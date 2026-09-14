@@ -22,7 +22,6 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import dev.lyzev.hp.client.modmenu.HorsePowerConfig
 import dev.lyzev.hp.client.modmenu.HorsePowerConfigManager
-import dev.lyzev.hp.client.util.HorseStatRanges
 import dev.lyzev.hp.client.util.HorseStatsRenderer
 import dev.lyzev.hp.client.util.round
 import dev.lyzev.hp.client.util.toBPS
@@ -53,6 +52,12 @@ import org.apache.logging.log4j.LogManager
 object HorsePowerClient : ClientModInitializer {
 
     const val MOD_ID = "horsepower"
+    val minMovementSpeed = AbstractHorse.MIN_MOVEMENT_SPEED.toDouble()
+    val maxMovementSpeed = AbstractHorse.MAX_MOVEMENT_SPEED.toDouble()
+    val minJumpStrength = AbstractHorse.MIN_JUMP_STRENGTH.toDouble()
+    val maxJumpStrength = AbstractHorse.MAX_JUMP_STRENGTH.toDouble()
+    val minHealth = AbstractHorse.MIN_HEALTH.toDouble()
+    val maxHealth = AbstractHorse.MAX_HEALTH.toDouble()
 
     val mc = Minecraft.getInstance()
     private val logger = LogManager.getLogger(HorsePowerClient::class.java)
@@ -178,17 +183,17 @@ object HorsePowerClient : ClientModInitializer {
                     else -> {
                         criteria = "average"
                         val movementSpeed = horse.getAttributeBaseValue(Attributes.MOVEMENT_SPEED).coerceIn(
-                            HorseStatRanges.MIN_MOVEMENT_SPEED,
-                            HorseStatRanges.MAX_MOVEMENT_SPEED
-                        ) / HorseStatRanges.MAX_MOVEMENT_SPEED
+                            minMovementSpeed,
+                            maxMovementSpeed
+                        ) / maxMovementSpeed
                         val jumpStrength = horse.getAttributeBaseValue(Attributes.JUMP_STRENGTH).coerceIn(
-                            HorseStatRanges.MIN_JUMP_STRENGTH,
-                            HorseStatRanges.MAX_JUMP_STRENGTH
-                        ) / HorseStatRanges.MAX_JUMP_STRENGTH
+                            minJumpStrength,
+                            maxJumpStrength
+                        ) / maxJumpStrength
                         val health = horse.getAttributeBaseValue(Attributes.MAX_HEALTH).coerceIn(
-                            HorseStatRanges.MIN_HEALTH,
-                            HorseStatRanges.MAX_HEALTH
-                        ) / HorseStatRanges.MAX_HEALTH
+                            minHealth,
+                            maxHealth
+                        ) / maxHealth
                         movementSpeed + jumpStrength + health
                     }
                 }
